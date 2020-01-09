@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/10 07:20:13 by aholster       #+#    #+#                */
-/*   Updated: 2019/12/10 15:56:19 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/09 19:25:08 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,24 @@
 
 # define PROMPT "¥注文>"
 
-typedef struct	s_env_kvp{
-	char	*key;
-	char	*value;
-}				t_env_kvp;
+typedef struct s_list	t_list;
+
+typedef struct	s_arg_object{
+	char		arg_buf[ARG_MAX + 1];
+	size_t		tail;
+	int			argc;
+	char		*argv[ARG_MAX / 2];
+	char		*envp;
+}				t_arg_object;
+
+typedef struct	s_env{
+	t_list		*env_list;
+	int			last_ret;
+}				t_env;
+
+int				shell_loop(t_env *const true_env);
+
+int				retrieve_argument(t_env *const true_env,\
+					t_arg_object *const restrict aargs);
 
 #endif

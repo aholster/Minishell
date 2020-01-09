@@ -6,17 +6,24 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/10 12:58:25 by aholster       #+#    #+#                 #
-#    Updated: 2019/12/10 15:57:07 by aholster      ########   odam.nl          #
+#    Updated: 2019/12/16 18:29:46 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-FILES := main
+BUILTIN_SRC := builtin_exit builtin_echo
 
-FILEC := $(FILES:%=ft_%.c)
+ENV_SRC := env_set env_search_key env_add_kvp env_del_kvp
 
-OBJ := $(FILEC:%=ft_%.o)
+FILES := main shell_loop retrieve_arguments
 
-HEAD := minishell.h
+FILEC := $(FILES:%=ft_%.c) $(ENV_SRC:%=env_internals/%.c)\
+ $(BUILTIN_SRC:%=builtins/%.c)
+
+OBJ := $(FILEC:%.c=%.o)
+
+DEPS := ./libft
+
+HEAD := minishell.h ./env_internals/ft_env.h ./builtins/builtin.h
 
 NAME := minishell
 
@@ -24,13 +31,24 @@ CFLAGS := -Wall -Werror -Wextra -g
 
 all: $(NAME)
 
+make_deps:
+	@for dir in $(DEPS); do \
+		make -C $$dir ; \
+	done
+
 $(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) -o $@ $^
+	@$(MAKE) make_deps
+	@$(CC) $(CFLAGS) -o $@ $^ -L ./libft -lft
 
 %.o: %.c $(HEAD)
 	@$(CC) -c $(CFLAGS) -o $@ $<
 
-clean:
+clean_deps:
+	@for dir in $(DEPS); do \
+		make fclean -C $$dir ; \
+	done
+
+clean: clean_deps
 	@rm -f $(OBJ)
 
 fclean: clean

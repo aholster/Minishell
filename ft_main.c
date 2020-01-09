@@ -6,53 +6,58 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/10 07:15:45 by aholster       #+#    #+#                */
-/*   Updated: 2019/12/10 15:09:14 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/09 15:31:05 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 
 #include <stdio.h>
-#include <unistd.h>
 
+#include "libft/libft.h"
 #include "minishell.h"
 
-static int	iter_argos(void)
-{
-	char	argu_space[ARG_MAX + 2];
-	ssize_t	arg_len;
+#include "env_internals/ft_env.h"
 
-	while (1)
+static int	initialize_env(char **envp, t_list **const restrict aenv_lst)
+{
+	char	*separator;
+
+	while (*envp != NULL)
 	{
-		dprintf(1, "%s ", PROMPT);
-		arg_len = read(1, argu_space, ARG_MAX + 2);
-		if (arg_len == -1)
+		printf("%s\n", *envp);
+		separator = ft_strchr(*envp, '=');
+		if (separator == NULL)
 		{
 			return (-1);
 		}
-		if (arg_len >= ARG_MAX)
-		{
-			dprintf(2, "minishell: Argument list too long");
-		}
 		else
 		{
-			write(1, argu_space, arg_len);
+			*separator = '\0';
 		}
+		if (env_add_kvp(*envp, separator + 1, aenv_lst) == -1)
+		{
+			return (-1);
+		}
+		envp++;
 	}
 	return (1);
 }
 
 int			main(int argc, char **argv, char **envp)
 {
-	t_env_kvp	*true_env;
+	t_env		true_env;
+	int			status;
 
-	while (*envp != NULL)
-	{
-		printf("%s\n", *envp);
-		envp += 1;
-	}
-	iter_argos();
 	(void)argc;
 	(void)argv;
-	return (1);
+	ft_bzero(&true_env, sizeof(t_env));
+	if (initialize_env(envp, &(true_env.env_list)) == -1)
+	{
+		ft_lstdel(&(true_env.env_list), &env_del_kvp);
+		return (-1);
+	}
+	status = shell_loop(&true_env);
+	ft_lstdel(&(true_env.env_list), &env_del_kvp);
+	return (status);
 }
