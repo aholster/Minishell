@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/16 08:59:33 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/09 19:36:52 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/12 02:12:06 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,11 @@ typedef struct	s_builtin_tbl{
 int				builtin_exit(int argc, char **argv, t_env *const true_env);
 
 int				builtin_echo(int argc, char **argv, t_env *const true_env);
+
+int				builtin_env(int argc, char **argv, t_env *const true_env);
+
+int				builtin_setenv(int argc, char **argv, t_env *const true_env);
+
+int				builtin_unsetenv(int argc, char **argv, t_env *const true_env);
 
 #endif

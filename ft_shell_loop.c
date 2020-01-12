@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 08:27:12 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/09 18:12:33 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/12 03:12:56 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 static const t_builtin_tbl	g_builtin_tbl[BUILTIN_COUNT] = {
 	{"exit", &builtin_exit},
 	// {"cd", &builtin_cd},
-	// {"env", &builtin_env},
-	// {"setenv", &builtin_setenv},
-	// {"untsetenv", &builtin_unsetenv},
+	{"cd", &builtin_exit},
+	{"env", &builtin_env},
+	{"setenv", &builtin_setenv},
+	{"unsetenv", &builtin_unsetenv},
 	{"echo", &builtin_echo},
 };
 
@@ -36,7 +37,7 @@ static int			builtin_go(t_env *const true_env,\
 	t_builtin			builtin;
 
 	index = 0;
-	while (index < 2)
+	while (index < BUILTIN_COUNT)
 	{
 		if (ft_strequ(name, g_builtin_tbl[index].name) == 1)
 		{
@@ -45,6 +46,33 @@ static int			builtin_go(t_env *const true_env,\
 			return (1);
 		}
 		index++;
+	}
+	return (0);
+}
+
+static int			hunt_exec(t_env *const true_env, t_arg_object *args)
+{
+	t_env_kvp	*const	path = env_search_key("PATH", true_env->env_list);
+	char				*iter;
+	char				*seq_end;
+
+	if (path != NULL)
+	{
+		iter = path->value;
+		while (1)
+		{
+			seq_end = ft_strchr(iter, ':');
+			if (seq_end == NULL)
+			{
+				printf("%s/%s\n", iter, args->argv[0]);
+				break ;
+			}
+			else
+			{
+				printf("%.*s/%s\n", (int)(seq_end - iter), iter, args->argv[0]);
+				iter = seq_end + 1;
+			}
+		}
 	}
 	return (0);
 }
@@ -63,13 +91,13 @@ int					shell_loop(t_env *const true_env)
 			{
 				continue ;
 			}
-			// else if (hunt_exec(args) != 1))
-			// {
-			// 	continue ;
-			// }
+			else if (hunt_exec(true_env, &args) != 1)
+			{
+				continue ;
+			}
 			else
 			{
-				dprintf(2, "minishell: unknown command: %s\n", args.argv[0]);
+				ft_puterr("minishell: unknown command: %s\n", args.argv[0]);
 				true_env->last_ret = 127;
 			}
 		}

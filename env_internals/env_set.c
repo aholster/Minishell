@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/11 11:49:54 by aholster       #+#    #+#                */
-/*   Updated: 2019/12/16 11:08:34 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/12 02:53:21 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			set_env(char const *const restrict key,\
 				char const *const restrict value,\
 				t_list **const aenv_lst)
 {
-	t_env_kvp	*const kvp = env_search_key(key, *aenv_lst)->content;
+	t_env_kvp	*const kvp = env_search_key(key, *aenv_lst);
 
 	if (kvp != NULL)
 	{

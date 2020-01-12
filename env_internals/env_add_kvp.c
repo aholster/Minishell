@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/11 12:06:35 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/09 14:53:49 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/11 22:42:47 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ int			env_add_kvp(char const *const restrict key,\
 		ft_bzero(&kvp, sizeof(t_env_kvp));
 		return (-1);
 	}
-	ft_lstadd(aenv_lst, new);
+	ft_lstaddend(aenv_lst, new);
 	return (1);
 }

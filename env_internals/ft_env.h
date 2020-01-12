@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/11 10:25:58 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/09 19:25:22 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/12 02:53:30 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct	s_env_kvp{
 
 typedef struct s_list	t_list;
 
-t_list			*env_search_key(char const *const restrict key,\
+t_env_kvp		*env_search_key(char const *const restrict key,\
 					t_list *env_lst);
 
 int				env_add_kvp(char const *const restrict key,\

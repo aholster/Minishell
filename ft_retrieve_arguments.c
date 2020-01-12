@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/16 17:10:03 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/09 19:27:52 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/11 23:48:18 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,40 @@ static int	generate_arg(char const **const arg_raw,\
 	return (1);
 }
 
+/*
+**	generate_arg currently does not deal with the size_limit of aargs->arg_buf
+*/
+
+static int	enter_env(t_env *const true_env,\
+				t_arg_object *const restrict aargs)
+{
+	t_list		*iterator;
+	t_env_kvp	*cur_kvp;
+	size_t		index;
+
+	index = aargs->argc;
+	aargs->envp = aargs->arg_buf + aargs->tail;
+	iterator = true_env->env_list;
+	while (iterator != NULL)
+	{
+		aargs->argv[index] = aargs->arg_buf + aargs->tail;
+		cur_kvp = iterator->content;
+		if (sizeof(aargs->arg_buf) > aargs->tail + 1 + cur_kvp->klen + cur_kvp->vlen)
+		{
+			sprintf(aargs->arg_buf + aargs->tail, "%s=%s", cur_kvp->key, cur_kvp->value);
+			aargs->tail += 1 + cur_kvp->klen + cur_kvp->vlen;
+		}
+		else
+		{
+			return (-1);
+		}
+		index++;
+		iterator = iterator->next;
+	}
+	aargs->argv[index] = NULL;
+	return (1);
+}
+
 static int	arg_lexer(char const *raw_arg,\
 				char const *const arg_end,\
 				t_env *const true_env,\
@@ -61,7 +95,10 @@ static int	arg_lexer(char const *raw_arg,\
 			raw_arg++;
 		}
 	}
-	(void)true_env;
+	if (enter_env(true_env, aargs) == -1)
+	{
+		return (-1);
+	}
 	return (1);
 }
 
@@ -74,11 +111,11 @@ int			retrieve_argument(t_env *const true_env,\
 	raw_arg_len = read(0, raw_arg, sizeof(raw_arg));
 	if (raw_arg_len < 0)
 	{
-		dprintf(2, "minishell: error retrieving arguments\n");
+		ft_puterr("minishell: error retrieving arguments\n");
 	}
 	else if (raw_arg_len >= ARG_MAX)
 	{
-		dprintf(2, "minishell: arguments given too long\n");
+		ft_puterr("minishell: arguments given too long\n");
 	}
 	else if (!(raw_arg_len == 1 && raw_arg[0] == '\n'))
 	{
