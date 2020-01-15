@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 08:27:12 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/12 03:12:56 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/15 17:48:53 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,33 +50,6 @@ static int			builtin_go(t_env *const true_env,\
 	return (0);
 }
 
-static int			hunt_exec(t_env *const true_env, t_arg_object *args)
-{
-	t_env_kvp	*const	path = env_search_key("PATH", true_env->env_list);
-	char				*iter;
-	char				*seq_end;
-
-	if (path != NULL)
-	{
-		iter = path->value;
-		while (1)
-		{
-			seq_end = ft_strchr(iter, ':');
-			if (seq_end == NULL)
-			{
-				printf("%s/%s\n", iter, args->argv[0]);
-				break ;
-			}
-			else
-			{
-				printf("%.*s/%s\n", (int)(seq_end - iter), iter, args->argv[0]);
-				iter = seq_end + 1;
-			}
-		}
-	}
-	return (0);
-}
-
 int					shell_loop(t_env *const true_env)
 {
 	t_arg_object	args;
@@ -91,7 +64,7 @@ int					shell_loop(t_env *const true_env)
 			{
 				continue ;
 			}
-			else if (hunt_exec(true_env, &args) != 1)
+			else if (ft_hunt_exec(true_env, &args) == 1)
 			{
 				continue ;
 			}

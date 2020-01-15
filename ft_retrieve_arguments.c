@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/16 17:10:03 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/11 23:48:18 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/15 18:45:54 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static int	enter_env(t_env *const true_env,\
 	t_env_kvp	*cur_kvp;
 	size_t		index;
 
-	index = aargs->argc;
-	aargs->envp = aargs->arg_buf + aargs->tail;
+	index = aargs->argc + 1;
+	aargs->envp = aargs->argv + aargs->argc + 1;
 	iterator = true_env->env_list;
 	while (iterator != NULL)
 	{
@@ -63,7 +63,7 @@ static int	enter_env(t_env *const true_env,\
 		if (sizeof(aargs->arg_buf) > aargs->tail + 1 + cur_kvp->klen + cur_kvp->vlen)
 		{
 			sprintf(aargs->arg_buf + aargs->tail, "%s=%s", cur_kvp->key, cur_kvp->value);
-			aargs->tail += 1 + cur_kvp->klen + cur_kvp->vlen;
+			aargs->tail += 2 + cur_kvp->klen + cur_kvp->vlen;
 		}
 		else
 		{
