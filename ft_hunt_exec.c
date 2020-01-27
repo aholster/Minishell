@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/15 09:11:01 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/15 18:41:46 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/23 17:54:24 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@ int				ft_hunt_exec(t_env *const true_env,\
 			return (127);
 		}
 	}
-	printf("Found: %s\n", exec_path);
-	return (run_executable(exec_path, args));
+	if (access(exec_path, X_OK) == 0)
+	{
+		true_env->last_ret = run_executable(exec_path, args);
+		return (1);
+	}
+	return (0);
 }

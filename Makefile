@@ -6,12 +6,12 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/10 12:58:25 by aholster       #+#    #+#                 #
-#    Updated: 2020/01/15 09:12:01 by aholster      ########   odam.nl          #
+#    Updated: 2020/01/27 17:20:27 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 BUILTIN_SRC := builtin_exit builtin_echo builtin_env builtin_setenv\
- builtin_unsetenv
+ builtin_unsetenv builtin_cd
 
 ENV_SRC := env_set env_search_key env_add_kvp env_del_kvp
 

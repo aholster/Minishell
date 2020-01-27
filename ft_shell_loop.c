@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 08:27:12 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/15 17:48:53 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/27 20:22:56 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@
 
 static const t_builtin_tbl	g_builtin_tbl[BUILTIN_COUNT] = {
 	{"exit", &builtin_exit},
-	// {"cd", &builtin_cd},
-	{"cd", &builtin_exit},
+	{"cd", &builtin_cd},
 	{"env", &builtin_env},
 	{"setenv", &builtin_setenv},
 	{"unsetenv", &builtin_unsetenv},

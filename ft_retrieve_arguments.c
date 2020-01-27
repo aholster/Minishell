@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/16 17:10:03 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/15 18:45:54 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/22 18:33:39 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	arg_lexer(char const *raw_arg,\
 	{
 		return (-1);
 	}
-	return (1);
+	return (aargs->argc);
 }
 
 int			retrieve_argument(t_env *const true_env,\
@@ -117,7 +117,7 @@ int			retrieve_argument(t_env *const true_env,\
 	{
 		ft_puterr("minishell: arguments given too long\n");
 	}
-	else if (!(raw_arg_len == 1 && raw_arg[0] == '\n'))
+	else if (raw_arg_len != 1 || raw_arg[0] != '\n')
 	{
 		if (raw_arg_len == 0)
 		{
