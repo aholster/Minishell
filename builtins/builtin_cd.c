@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/27 17:19:44 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/27 21:50:32 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/28 16:18:30 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,6 @@ static int	retrieve_val(char apath[PATH_MAX],
 	return (0);
 }
 
-static int	merge_paths(char apath[PATH_MAX],\
-				char const *const arg,\
-				size_t len)
-{
-	char	cur_dir[PATH_MAX];
-	size_t	dir_len;
-
-	if (getcwd(cur_dir, PATH_MAX) == NULL)
-	{
-		ft_puterr("minishell: cd: error retrieving current directory\n");
-		return (-1);
-	}
-	dir_len = ft_strlen(cur_dir);
-	if (dir_len + len >= PATH_MAX)
-	{
-		ft_puterr("minishell: cd: %s/%s File name too long\n", cur_dir, arg);
-		return (-1);
-	}
-	sprintf(apath, "%s/%s", cur_dir, arg);
-	return (0);
-}
-
 static int	generate_path(char apath[PATH_MAX],
 				char const *const arg,
 				t_env *const true_env)
@@ -85,14 +63,7 @@ static int	generate_path(char apath[PATH_MAX],
 			ft_puterr("minishell: cd: %s File name too long\n", arg);
 			return (-1);
 		}
-		if (arg[0] == '.')
-		{
-			return (merge_paths(apath, arg, len));
-		}
-		else
-		{
-			ft_memcpy(apath, arg, len + 1);
-		}
+		ft_memcpy(apath, arg, len + 1);
 	}
 	return (0);
 }
