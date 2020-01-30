@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 08:27:12 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/27 20:22:56 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/30 21:24:20 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,9 @@ int					shell_loop(t_env *const true_env)
 			{
 				continue ;
 			}
-			else if (ft_hunt_exec(true_env, &args) == 1)
-			{
-				continue ;
-			}
 			else
 			{
-				ft_puterr("minishell: unknown command: %s\n", args.argv[0]);
-				true_env->last_ret = 127;
+				true_env->last_ret = ft_hunt_exec(true_env, &args);
 			}
 		}
 	}

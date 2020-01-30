@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/15 09:11:01 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/23 17:54:24 by aholster      ########   odam.nl         */
+/*   Updated: 2020/01/30 22:05:59 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 
 #include "env_internals/ft_env.h"
 
-void				find_command(char path[PATH_MAX],\
+static int		find_command_path(char path[PATH_MAX],\
 					t_env *const true_env,\
-					t_arg_object *const args)
+					char const *const name)
 {
 	t_env_kvp	*const	sources = env_search_key("PATH", true_env->env_list);
 	char				*iter;
@@ -41,23 +41,52 @@ void				find_command(char path[PATH_MAX],\
 				sub_len = ft_strchr(iter, ':') - iter;
 			else
 				sub_len = ft_strlen(iter);
-			snprintf(path, PATH_MAX, "%.*s/%s", sub_len, iter, args->argv[0]);
-			if (access(path, X_OK) == 0)
+			snprintf(path, PATH_MAX, "%.*s/%s", sub_len, iter, name);
+			if (access(path, F_OK) == 0)
 			{
-				return ;
+				return (0);
 			}
 			iter += sub_len;
 		}
 		ft_bzero(path, PATH_MAX);
 	}
-	ft_puterr("minishell: %s: command not found\n", args->argv[0]);
+	return (-1);
+}
+
+static int		find_exec_path(char path[PATH_MAX],
+					t_env *true_env,
+					char const *const name)
+{
+	if (ft_strchr(name, '/') == NULL)
+	{
+		if (find_command_path(path, true_env, name) == -1)
+		{
+			ft_puterr("minishell: %s: command not found\n", name);
+			return (-1);
+		}
+	}
+	else
+	{
+		if (ft_strlen(name) >= PATH_MAX)
+		{
+			ft_puterr("minishell: %s: File name too long\n", name);
+			return (-1);
+		}
+		if (access(name, F_OK) != 0)
+		{
+			ft_puterr("minishell: %s: No such file or directory\n", name);
+			return (-1);
+		}
+		ft_memcpy(path, name, ft_strlen(name));
+	}
+	return (0);
 }
 
 static int		run_executable(char exec_path[PATH_MAX],\
 					t_arg_object *const args)
 {
 	pid_t	child_pid;
-	int		ret_code;
+	int		status;
 
 	child_pid = fork();
 	if (child_pid == -1)
@@ -66,19 +95,16 @@ static int		run_executable(char exec_path[PATH_MAX],\
 	}
 	if (child_pid == 0)
 	{
-		printf("child initiating program %s...\n", exec_path);
-		ret_code = execve(exec_path, args->argv, args->envp);
-		printf("execve returned %d\n", ret_code);
-		perror("minishell: execve:");
-		exit(ret_code);
+		execve(exec_path, args->argv, args->envp);
+		exit(-1);
 	}
 	else
 	{
-		waitpid(child_pid, &ret_code, 0);
-		if (WIFEXITED(ret_code) != 0)
-			return (WEXITSTATUS(ret_code));
+		waitpid(child_pid, &status, 0);
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
 		else
-			return (999);
+			return (-1);
 	}
 }
 
@@ -88,31 +114,14 @@ int				ft_hunt_exec(t_env *const true_env,\
 	char	exec_path[PATH_MAX];
 
 	ft_bzero(exec_path, PATH_MAX);
-	if (ft_strchr(args->argv[0], '/') == NULL)
+	if (find_exec_path(exec_path, true_env, args->argv[0]) == -1)
 	{
-		find_command(exec_path, true_env, args);
+		return (-1);
 	}
-	else
+	if (access(exec_path, X_OK) != 0)
 	{
-		if (ft_strlen(args->argv[0]) >= PATH_MAX)
-		{
-			ft_puterr("minishell: %s: File name too long\n", args->argv[0]);
-			return (127);
-		}
-		if (access(args->argv[0], X_OK) == 0)
-		{
-			snprintf(exec_path, PATH_MAX, "%s", args->argv[0]);
-		}
-		else
-		{
-			ft_puterr("minishell: %s: No such file or directory\n", args->argv[0]);
-			return (127);
-		}
+		ft_puterr("minishell: %s: No permissions\n", args->argv[0]);
+		return (-1);
 	}
-	if (access(exec_path, X_OK) == 0)
-	{
-		true_env->last_ret = run_executable(exec_path, args);
-		return (1);
-	}
-	return (0);
+	return (run_executable(exec_path, args));
 }
