@@ -6,16 +6,15 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/11 12:06:35 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/11 22:42:47 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/05 17:36:40 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
 #include "ft_env.h"
 
-static int	create_kvp(char const *const restrict key,\
-				char const *const restrict value,\
-				t_env_kvp *const restrict akvp)
+static int	create_kvp(char const *const key,\
+				char const *const value,\
+				t_env_kvp *const akvp)
 {
 	akvp->klen = ft_strlen(key);
 	akvp->key = ft_memdup(key, akvp->klen + 1);
@@ -33,12 +32,12 @@ static int	create_kvp(char const *const restrict key,\
 	return (1);
 }
 
-int			env_add_kvp(char const *const restrict key,\
-				char const *const restrict value,\
-				t_list **const aenv_lst)
+int			env_add_kvp(char const *const key,\
+				char const *const value,\
+				struct s_list **const aenv_lst)
 {
-	t_env_kvp	kvp;
-	t_list		*new;
+	t_env_kvp		kvp;
+	struct s_list	*new;
 
 	if (create_kvp(key, value, &kvp) == -1)
 	{

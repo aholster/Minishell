@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/16 08:59:33 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/27 17:20:38 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/05 17:39:28 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include <stdbool.h>
 
 # define BUILTIN_COUNT 6
-
-typedef struct s_env	t_env;
 
 typedef	int	(*t_builtin)(int, char **, t_env *const);
 

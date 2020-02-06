@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/11 10:25:58 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/12 02:53:30 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/05 17:36:12 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_ENV_H
 
 # include <stddef.h>
+# include "../libft/libft.h"
 
 typedef struct	s_env_kvp{
 	char	*key;
@@ -22,18 +23,16 @@ typedef struct	s_env_kvp{
 	size_t	vlen;
 }				t_env_kvp;
 
-typedef struct s_list	t_list;
+t_env_kvp		*env_search_key(char const *const key,\
+					struct s_list *env_lst);
 
-t_env_kvp		*env_search_key(char const *const restrict key,\
-					t_list *env_lst);
+int				env_add_kvp(char const *const key,\
+					char const *const value,\
+					struct s_list **const aenv_lst);
 
-int				env_add_kvp(char const *const restrict key,\
-					char const *const restrict value,\
-					t_list **const aenv_lst);
-
-int				set_env(char const *const restrict key,\
-					char const *const restrict value,\
-					t_list **const aenv_lst);
+int				set_env(char const *const key,\
+					char const *const value,\
+					struct s_list **const aenv_lst);
 
 void			env_del_kvp(void *data, size_t size);
 

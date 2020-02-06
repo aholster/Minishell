@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/12 02:10:20 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/12 02:43:57 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/05 17:38:12 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #include "../minishell.h"
 
-static void	search_and_destroy(const char *const restrict key,\
+static void	search_and_destroy(const char *const key,\
 				t_env *const true_env)
 {
 	t_list		**aiter;

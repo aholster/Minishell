@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 08:27:12 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/30 21:24:20 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/05 18:58:40 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static const t_builtin_tbl	g_builtin_tbl[BUILTIN_COUNT] = {
 };
 
 static int			builtin_go(t_env *const true_env,\
-						t_arg_object *const restrict aargs)
+						t_arg_object *const aargs)
 {
 	size_t				index;
 	const char *const	name = aargs->argv[0];
@@ -57,7 +57,7 @@ int					shell_loop(t_env *const true_env)
 	{
 		ft_bzero(&args, sizeof(t_arg_object));
 		dprintf(1, "%s ", PROMPT);
-		if (retrieve_argument(true_env, &args) != 0)
+		if (retrieve_argument(true_env, &args) == 0)
 		{
 			if (builtin_go(true_env, &args) == 1)
 			{

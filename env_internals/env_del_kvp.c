@@ -6,13 +6,11 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 07:37:34 by aholster       #+#    #+#                */
-/*   Updated: 2019/12/13 07:39:52 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/05 17:36:34 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-
-#include "../libft/libft.h"
 #include "ft_env.h"
 
 void	env_del_kvp(void *data, size_t size)

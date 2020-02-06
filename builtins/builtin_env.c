@@ -6,15 +6,15 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/09 20:45:12 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/12 02:38:32 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/05 17:38:33 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
-#include "../libft/libft.h"
-
 #include "../env_internals/ft_env.h"
+
+#include "../libft/libft.h"
 
 #include "../minishell.h"
 

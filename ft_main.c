@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/10 07:15:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/01/09 15:31:05 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/05 17:30:05 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #include "env_internals/ft_env.h"
 
-static int	initialize_env(char **envp, t_list **const restrict aenv_lst)
+static int	initialize_env(char **envp, t_list **const aenv_lst)
 {
 	char	*separator;
 

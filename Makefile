@@ -6,7 +6,7 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/10 12:58:25 by aholster       #+#    #+#                 #
-#    Updated: 2020/01/27 17:20:27 by aholster      ########   odam.nl          #
+#    Updated: 2020/02/05 17:36:16 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ BUILTIN_SRC := builtin_exit builtin_echo builtin_env builtin_setenv\
 
 ENV_SRC := env_set env_search_key env_add_kvp env_del_kvp
 
-FILES := main shell_loop retrieve_arguments puterr hunt_exec
+FILES := main shell_loop retrieve_arguments puterr hunt_exec generate_all_arguments
 
 FILEC := $(FILES:%=ft_%.c) $(ENV_SRC:%=env_internals/%.c)\
  $(BUILTIN_SRC:%=builtins/%.c)
