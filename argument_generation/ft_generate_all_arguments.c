@@ -10,40 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-#include "libft/libft.h"
-#include "env_internals/ft_env.h"
-
-static int	argument_new(t_arg_object *const aargs)
-{
-	if ((size_t)aargs->argc + 1 >= sizeof(aargs->argv) / sizeof(char *))
-	{
-		return (-1);
-	}
-	aargs->argv[aargs->argc] = aargs->arg_buf + aargs->tail;
-	aargs->argc++;
-	return (0);
-}
-
-// static int	argument_expand(t_arg_object *const aargs,
-// 				char const *str,
-// 				const size_t len)
-// {
-// 	if (sizeof(aargs->arg_buf) < aargs->tail + len + 2)
-// 	{
-// 		return (-1);
-// 	}
-// 	ft_memcpy(aargs->argv + aargs->tail, str, len);
-// 	aargs->tail += len;
-// 	return (0);
-// }
-
-static void	argument_finish(t_arg_object *const aargs)
-{
-	aargs->arg_buf[aargs->tail] = '\0';
-	aargs->tail += 2;
-}
+#include "ft_argument.h"
 
 static int	generate_argument(char const **const raw_arg,
 				char const *const arg_end,
@@ -79,15 +46,13 @@ int			generate_all_arguments(char const *raw_arg,
 	{
 		if (*raw_arg != ' ')
 		{
-			if (argument_new(aargs) == -1)
-			{
-				return (-1);
-			}
-			if (generate_argument(&raw_arg, arg_end, aargs) == -1)
-			{
-				return (-1);
-			}
+			argument_new(aargs);
+			generate_argument(&raw_arg, arg_end, aargs);
 			argument_finish(aargs);
+			if (aargs->err == 1)
+			{
+				return (-1);
+			}
 		}
 		while (*raw_arg == ' ' && raw_arg != arg_end)
 		{

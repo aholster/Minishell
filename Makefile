@@ -6,25 +6,28 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/10 12:58:25 by aholster       #+#    #+#                 #
-#    Updated: 2020/02/05 17:36:16 by aholster      ########   odam.nl          #
+#    Updated: 2020/02/13 18:11:41 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
+
+ARGUMENT_SRC := generate_all_arguments retrieve_arguments argument_creationkit
 
 BUILTIN_SRC := builtin_exit builtin_echo builtin_env builtin_setenv\
  builtin_unsetenv builtin_cd
 
 ENV_SRC := env_set env_search_key env_add_kvp env_del_kvp
 
-FILES := main shell_loop retrieve_arguments puterr hunt_exec generate_all_arguments
+FILES := main shell_loop puterr hunt_exec
 
 FILEC := $(FILES:%=ft_%.c) $(ENV_SRC:%=env_internals/%.c)\
- $(BUILTIN_SRC:%=builtins/%.c)
+ $(BUILTIN_SRC:%=builtins/%.c) $(ARGUMENT_SRC:%=./argument_generation/ft_%.c)
 
 OBJ := $(FILEC:%.c=%.o)
 
 DEPS := ./libft
 
-HEAD := minishell.h ./env_internals/ft_env.h ./builtins/builtin.h
+HEAD := minishell.h ./env_internals/ft_env.h ./builtins/builtin.h\
+ ./argument_generation/ft_argument.h
 
 NAME := minishell
 

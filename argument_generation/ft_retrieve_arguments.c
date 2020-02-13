@@ -6,17 +6,17 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/16 17:10:03 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/06 23:54:50 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/13 19:51:50 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
 
-#include "minishell.h"
+#include "../libft/libft.h"
+#include "../env_internals/ft_env.h"
 
-#include "libft/libft.h"
-#include "env_internals/ft_env.h"
+#include "ft_argument.h"
 
 /*
 **	generate_arg currently does not deal with the size_limit of aargs->arg_buf
@@ -27,28 +27,28 @@ static int	enter_env(t_env *const true_env,\
 {
 	t_list const	*iterator;
 	t_env_kvp const	*kvp;
-	size_t			index;
+	int				arg_offset;
 
-	index = aargs->argc + 1;
 	aargs->envp = aargs->argv + aargs->argc + 1;
+	aargs->argc++;
+	arg_offset = 1;
 	iterator = true_env->env_list;
 	while (iterator != NULL)
 	{
-		aargs->argv[index] = aargs->arg_buf + aargs->tail;
 		kvp = iterator->content;
-		if (sizeof(aargs->arg_buf) > aargs->tail + 1 + kvp->klen + kvp->vlen)
-		{
-			sprintf(aargs->arg_buf + aargs->tail, "%s=%s", kvp->key, kvp->value);
-			aargs->tail += 2 + kvp->klen + kvp->vlen;
-		}
-		else
+		argument_new(aargs);
+		argument_expand(aargs, kvp->key, kvp->klen);
+		argument_expand(aargs, "=", 1);
+		argument_expand(aargs, kvp->value, kvp->vlen);
+		argument_finish(aargs);
+		if (aargs->err == 1)
 		{
 			return (-1);
 		}
-		index++;
+		arg_offset++;
 		iterator = iterator->next;
 	}
-	aargs->argv[index] = NULL;
+	aargs->argc -= arg_offset;
 	return (1);
 }
 
