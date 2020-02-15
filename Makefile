@@ -6,16 +6,16 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/10 12:58:25 by aholster       #+#    #+#                 #
-#    Updated: 2020/02/13 18:11:41 by aholster      ########   odam.nl          #
+#    Updated: 2020/02/15 19:24:37 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-ARGUMENT_SRC := generate_all_arguments retrieve_arguments argument_creationkit
+ARGUMENT_SRC := arg_lexer retrieve_arguments argument_creationkit
 
 BUILTIN_SRC := builtin_exit builtin_echo builtin_env builtin_setenv\
  builtin_unsetenv builtin_cd
 
-ENV_SRC := env_set env_search_key env_add_kvp env_del_kvp
+ENV_SRC := env_set env_search_key env_add_kvp env_del_kvp env_is_envkey_char
 
 FILES := main shell_loop puterr hunt_exec
 

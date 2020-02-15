@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/16 17:10:03 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/13 19:51:50 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/15 16:24:08 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	enter_env(t_env *const true_env,\
 	return (1);
 }
 
-static int	arg_lexer(char raw_arg[ARG_MAX + 2],
+static int	check_arguments(char raw_arg[ARG_MAX + 2],
 				ssize_t raw_arg_len,
 				t_env *const true_env,
 				t_arg_object *const aargs)
@@ -66,15 +66,17 @@ static int	arg_lexer(char raw_arg[ARG_MAX + 2],
 	{
 		raw_arg_len--;
 	}
-	if (generate_all_arguments(raw_arg, raw_arg + raw_arg_len, aargs) == -1)
+	if (arg_lexer(raw_arg, raw_arg + raw_arg_len, true_env, aargs) == 1)
 	{
-		return (-1);
+		if (aargs->argc == 0)
+			return (1);
+		if (enter_env(true_env, aargs) == 1)
+		{
+			return (0);
+		}
 	}
-	else if (enter_env(true_env, aargs) == -1)
-	{
-		return (-1);
-	}
-	return (0);
+	ft_puterr("minishell: error creating arguments\n");
+	return (-1);
 }
 
 int			retrieve_argument(t_env *const true_env,
@@ -94,9 +96,5 @@ int			retrieve_argument(t_env *const true_env,
 		ft_puterr("minishell: arguments given too long\n");
 		true_env->last_ret = -1;
 	}
-	else if (raw_arg_len == 1 && raw_arg[0] == '\n')
-	{
-		return (1);
-	}
-	return (arg_lexer(raw_arg, raw_arg_len, true_env, aargs));
+	return (check_arguments(raw_arg, raw_arg_len, true_env, aargs));
 }

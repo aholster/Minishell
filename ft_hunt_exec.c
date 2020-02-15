@@ -6,12 +6,13 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/15 09:11:01 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/13 19:49:35 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/15 17:35:30 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 
 #include <unistd.h>
 #include <stdio.h>
@@ -96,6 +97,7 @@ static int		run_executable(char exec_path[PATH_MAX],\
 	if (child_pid == 0)
 	{
 		execve(exec_path, args->argv, args->envp);
+		ft_puterr("minishell: cannot execute %s\n", exec_path);
 		exit(-1);
 	}
 	else
@@ -111,7 +113,8 @@ static int		run_executable(char exec_path[PATH_MAX],\
 int				ft_hunt_exec(t_env *const true_env,\
 					t_arg_object *const args)
 {
-	char	exec_path[PATH_MAX];
+	char		exec_path[PATH_MAX];
+	struct stat	info;
 
 	ft_bzero(exec_path, PATH_MAX);
 	if (find_exec_path(exec_path, true_env, args->argv[0]) == -1)
@@ -121,6 +124,11 @@ int				ft_hunt_exec(t_env *const true_env,\
 	if (access(exec_path, X_OK) != 0)
 	{
 		ft_puterr("minishell: %s: No permissions\n", args->argv[0]);
+		return (-1);
+	}
+	if (stat(exec_path, &info) == -1 || !S_ISREG(info.st_mode))
+	{
+		ft_puterr("minishell: %s: non-regular filetype\n", args->argv[0]);
 		return (-1);
 	}
 	return (run_executable(exec_path, args));

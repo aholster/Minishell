@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/11 23:09:22 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/05 17:38:16 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/15 23:44:45 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,38 @@
 
 #include "../minishell.h"
 
+static char	*find_key_limit(char *iter)
+{
+	if (!(ft_isdigit(iter[0]) || iter[0] == '='))
+	{
+		while (*iter && is_envkey_char(*iter))
+		{
+			iter++;
+		}
+		if (*iter == '=')
+		{
+			return (iter);
+		}
+	}
+	return (NULL);
+}
+
 static int	split_kvp_str(char *const str, t_env *const true_env)
 {
 	char	*sep;
 
-	sep = ft_strchr(str, '=');
-	if (sep == NULL || str[0] == '=')
+	sep = find_key_limit(str);
+	if (sep == NULL)
 	{
-		ft_puterr("minishell: set_env invalid argument: %s\n", str);
-		return (1);
+		ft_puterr("minishell: setenv: badly formatted key %s\n", str);
+		return (-1);
 	}
 	else
 	{
 		*sep = '\0';
 		if (set_env(str, sep + 1, &(true_env->env_list)) == -1)
 		{
-			ft_puterr("minishell: set_env failed to edit env\n");
+			ft_puterr("minishell: setenv: failed to edit env\n");
 			return (-1);
 		}
 	}
