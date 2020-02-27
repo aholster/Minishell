@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_puterr.c                                        :+:    :+:            */
+/*   ft_numlst_newnode.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/11 23:22:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/18 12:04:46 by aholster      ########   odam.nl         */
+/*   Created: 2019/07/27 18:24:47 by aholster       #+#    #+#                */
+/*   Updated: 2019/08/12 11:03:21 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/ft_printf.h"
+#include "float_tech.h"
 
-#include <stdarg.h>
-
-#include "minishell.h"
-
-void	ft_puterr(const char *const err, ...)
+t_numlst	*ft_numlst_newnode(void)
 {
-	va_list	ap;
+	t_numlst	*node;
 
-	va_start(ap, err);
-	ft_vdprintf(2, err, ap);
-	va_end(ap);
+	node = (t_numlst *)malloc(sizeof(t_numlst));
+	if (node == NULL)
+		return (NULL);
+	node->mem = (char *)malloc(sizeof(char) * LSTBUF_SIZE);
+	if (node->mem == NULL)
+	{
+		free(node);
+		return (NULL);
+	}
+	ft_memset(node->mem, '0', LSTBUF_SIZE);
+	node->mem_size = LSTBUF_SIZE;
+	node->next = NULL;
+	node->prev = NULL;
+	return (node);
 }

@@ -6,11 +6,11 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/13 08:27:12 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/05 18:58:40 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/18 12:04:26 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "ft_printf/ft_printf.h"
 
 #include "libft/libft.h"
 
@@ -56,7 +56,11 @@ int					shell_loop(t_env *const true_env)
 	while (1)
 	{
 		ft_bzero(&args, sizeof(t_arg_object));
-		dprintf(1, "%s ", PROMPT);
+		if (ft_dprintf(1, "%s ", PROMPT) == -1)
+		{
+			ft_puterr("Minishell: error writing to stdout\n");
+			return (-1);
+		}
 		if (retrieve_argument(true_env, &args) == 0)
 		{
 			if (builtin_go(true_env, &args) == 1)

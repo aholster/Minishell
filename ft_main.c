@@ -6,18 +6,37 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/12/10 07:15:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/05 17:30:05 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/18 10:23:10 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 
-#include <stdio.h>
+#include <unistd.h>
 
 #include "libft/libft.h"
 #include "minishell.h"
 
 #include "env_internals/ft_env.h"
+
+static int	initialize_basic_env(t_list **const aenv_lst)
+{
+	char	cur_path[PATH_MAX + 1];
+
+	if (getcwd(cur_path, PATH_MAX) == NULL)
+	{
+		ft_puterr("Minishell: could not retrieve path\n");
+	}
+	else if (set_env("PWD", cur_path, aenv_lst) == -1)
+	{
+		return (-1);
+	}
+	if (set_env("TERM_PROGRAM", "minishell", aenv_lst) == -1)
+	{
+		return (-1);
+	}
+	return (1);
+}
 
 static int	initialize_env(char **envp, t_list **const aenv_lst)
 {
@@ -25,7 +44,6 @@ static int	initialize_env(char **envp, t_list **const aenv_lst)
 
 	while (*envp != NULL)
 	{
-		printf("%s\n", *envp);
 		separator = ft_strchr(*envp, '=');
 		if (separator == NULL)
 		{
@@ -41,7 +59,7 @@ static int	initialize_env(char **envp, t_list **const aenv_lst)
 		}
 		envp++;
 	}
-	return (1);
+	return (initialize_basic_env(aenv_lst));
 }
 
 int			main(int argc, char **argv, char **envp)
@@ -55,6 +73,7 @@ int			main(int argc, char **argv, char **envp)
 	if (initialize_env(envp, &(true_env.env_list)) == -1)
 	{
 		ft_lstdel(&(true_env.env_list), &env_del_kvp);
+		ft_puterr("Minishell: error mallocing env\n");
 		return (-1);
 	}
 	status = shell_loop(&true_env);

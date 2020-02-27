@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_puterr.c                                        :+:    :+:            */
+/*   ft_flg_verif.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/11 23:22:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/18 12:04:46 by aholster      ########   odam.nl         */
+/*   Created: 2019/10/03 19:43:50 by aholster       #+#    #+#                */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/ft_printf.h"
+#include "./../incl/ft_internals.h"
 
-#include <stdarg.h>
-
-#include "minishell.h"
-
-void	ft_puterr(const char *const err, ...)
+int		flg_verif(const unsigned char c, const t_flag *const flags)
 {
-	va_list	ap;
+	const unsigned short	flip = c / FLG_UNS;
 
-	va_start(ap, err);
-	ft_vdprintf(2, err, ap);
-	va_end(ap);
+	if (((1LLU << (c - (flip * FLG_UNS))) & flags->actiflags[flip]) > 0)
+		return (1);
+	return (-1);
 }

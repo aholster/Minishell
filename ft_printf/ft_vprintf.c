@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_puterr.c                                        :+:    :+:            */
+/*   ft_vprintf.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/11 23:22:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/18 12:04:46 by aholster      ########   odam.nl         */
+/*   Created: 2019/09/13 15:19:31 by aholster       #+#    #+#                */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/ft_printf.h"
+#include "ft_printf.h"
+#include "./incl/ft_internals.h"
 
-#include <stdarg.h>
-
-#include "minishell.h"
-
-void	ft_puterr(const char *const err, ...)
+int		ft_vprintf(const char *format, va_list args)
 {
-	va_list	ap;
+	int		holder;
 
-	va_start(ap, err);
-	ft_vdprintf(2, err, ap);
-	va_end(ap);
+	holder = ft_vdprintf(1, format, args);
+	return (holder);
 }

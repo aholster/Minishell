@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_puterr.c                                        :+:    :+:            */
+/*   ft_memdup.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/11 23:22:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/18 12:04:46 by aholster      ########   odam.nl         */
+/*   Created: 2019/02/18 16:02:34 by aholster       #+#    #+#                */
+/*   Updated: 2020/02/19 09:41:38 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/ft_printf.h"
+#include "./../incl/ft_utilities.h"
 
-#include <stdarg.h>
-
-#include "minishell.h"
-
-void	ft_puterr(const char *const err, ...)
+void	*ft_memdup(const void *const src, const size_t len)
 {
-	va_list	ap;
+	size_t						index;
+	char						*ret;
 
-	va_start(ap, err);
-	ft_vdprintf(2, err, ap);
-	va_end(ap);
+	index = 0;
+	ret = (char *)malloc(sizeof(char) * len);
+	if (ret == NULL)
+		return (NULL);
+	ft_memcpy(ret, src, len);
+	return ((void *)ret);
 }

@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_puterr.c                                        :+:    :+:            */
+/*   ft_strcpy.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/11 23:22:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/18 12:04:46 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/17 11:12:58 by aholster       #+#    #+#                */
+/*   Updated: 2019/10/04 18:38:21 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/ft_printf.h"
+#include "./../incl/ft_utilities.h"
 
-#include <stdarg.h>
-
-#include "minishell.h"
-
-void	ft_puterr(const char *const err, ...)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	va_list	ap;
+	size_t	len;
 
-	va_start(ap, err);
-	ft_vdprintf(2, err, ap);
-	va_end(ap);
+	len = ft_strlen(src);
+	ft_memcpy(dst, src, len + 1);
+	return (dst);
 }

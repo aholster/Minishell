@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_puterr.c                                        :+:    :+:            */
+/*   ft_nbrlen.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/11 23:22:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/18 12:04:46 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/14 13:36:17 by aholster       #+#    #+#                */
+/*   Updated: 2019/02/01 21:14:08 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/ft_printf.h"
-
-#include <stdarg.h>
-
-#include "minishell.h"
-
-void	ft_puterr(const char *const err, ...)
+unsigned int	ft_nbrlen(long long n, unsigned int base)
 {
-	va_list	ap;
+	unsigned int length;
 
-	va_start(ap, err);
-	ft_vdprintf(2, err, ap);
-	va_end(ap);
+	length = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+		length++;
+	while (n != 0)
+	{
+		n = n / base;
+		length++;
+	}
+	return (length);
 }

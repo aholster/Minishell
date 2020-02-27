@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_puterr.c                                        :+:    :+:            */
+/*   ft_numlst_init.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/11 23:22:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/18 12:04:46 by aholster      ########   odam.nl         */
+/*   Created: 2019/08/12 11:58:30 by aholster       #+#    #+#                */
+/*   Updated: 2019/09/06 08:11:27 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/ft_printf.h"
+#include "float_tech.h"
 
-#include <stdarg.h>
-
-#include "minishell.h"
-
-void	ft_puterr(const char *const err, ...)
+t_numlst				*ft_numlst_dec_init(void)
 {
-	va_list	ap;
+	t_numlst	*node;
 
-	va_start(ap, err);
-	ft_vdprintf(2, err, ap);
-	va_end(ap);
+	node = (t_numlst *)malloc(sizeof(t_numlst));
+	if (node == NULL)
+		return (NULL);
+	node->mem = (char *)malloc(sizeof(char) * 3);
+	if (node->mem == NULL)
+	{
+		free(node);
+		return (NULL);
+	}
+	node->mem[0] = '0';
+	node->mem[1] = '.';
+	node->mem[2] = '0';
+	node->mem_size = 3;
+	node->next = NULL;
+	node->prev = NULL;
+	return (node);
 }

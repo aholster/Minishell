@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_puterr.c                                        :+:    :+:            */
+/*   ft_flt_support.h                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/11 23:22:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/18 12:04:46 by aholster      ########   odam.nl         */
+/*   Created: 2019/10/04 18:57:11 by aholster       #+#    #+#                */
+/*   Updated: 2020/02/19 13:18:43 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/ft_printf.h"
+#ifndef FT_FLT_SUPPORT_H
+# define FT_FLT_SUPPORT_H
 
-#include <stdarg.h>
+# include <stddef.h>
 
-#include "minishell.h"
-
-void	ft_puterr(const char *const err, ...)
+typedef union		u_float
 {
-	va_list	ap;
+	long double		ld;
+	unsigned short	byte[5];
+	unsigned\
+	long long		llu;
+}					t_float;
 
-	va_start(ap, err);
-	ft_vdprintf(2, err, ap);
-	va_end(ap);
-}
+int					ft_custom_ld_to_text(const long double input,
+						const unsigned int precision,
+						char **const amem,
+						size_t *asize);
+
+#endif

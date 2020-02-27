@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_puterr.c                                        :+:    :+:            */
+/*   ft_bzero.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/11 23:22:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/18 12:04:46 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/17 13:33:03 by aholster       #+#    #+#                */
+/*   Updated: 2020/02/25 10:06:30 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/ft_printf.h"
+#include "./../incl/ft_utilities.h"
 
-#include <stdarg.h>
-
-#include "minishell.h"
-
-void	ft_puterr(const char *const err, ...)
+void	ft_bzero(void *s, size_t n)
 {
-	va_list	ap;
+	size_t	offset;
+	char	*cs;
 
-	va_start(ap, err);
-	ft_vdprintf(2, err, ap);
-	va_end(ap);
+	cs = s;
+	while (n > 0 && cs + 0 % sizeof(long long))
+	{
+		*cs = '\0';
+		cs += 1;
+		n--;
+	}
+	offset = 0;
+	while (n - offset >= sizeof(long long))
+	{
+		*(long long *)(cs + offset) = 0ll;
+		offset += sizeof(long long);
+	}
+	while (offset < n)
+	{
+		(cs)[offset] = '\0';
+		offset++;
+	}
 }

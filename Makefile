@@ -6,7 +6,7 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/10 12:58:25 by aholster       #+#    #+#                 #
-#    Updated: 2020/02/15 19:24:37 by aholster      ########   odam.nl          #
+#    Updated: 2020/02/18 10:28:01 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ FILEC := $(FILES:%=ft_%.c) $(ENV_SRC:%=env_internals/%.c)\
 
 OBJ := $(FILEC:%.c=%.o)
 
-DEPS := ./libft
+DEPS := ./libft ./ft_printf
 
 HEAD := minishell.h ./env_internals/ft_env.h ./builtins/builtin.h\
  ./argument_generation/ft_argument.h
@@ -42,7 +42,7 @@ make_deps:
 
 $(NAME): $(OBJ)
 	@$(MAKE) make_deps
-	@$(CC) $(CFLAGS) -o $@ $^ -L ./libft -lft
+	@$(CC) $(CFLAGS) -o $@ $^ -L ./libft -lft -L ./ft_printf -lftprintf
 
 %.o: %.c $(HEAD)
 	@$(CC) -c $(CFLAGS) -o $@ $<

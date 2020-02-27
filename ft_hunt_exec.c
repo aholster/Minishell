@@ -6,16 +6,17 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/15 09:11:01 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/15 17:35:30 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/18 12:05:03 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_printf/ft_printf.h"
 
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 
 #include <unistd.h>
-#include <stdio.h>
 
 #include "libft/libft.h"
 
@@ -42,7 +43,7 @@ static int		find_command_path(char path[PATH_MAX],\
 				sub_len = ft_strchr(iter, ':') - iter;
 			else
 				sub_len = ft_strlen(iter);
-			snprintf(path, PATH_MAX, "%.*s/%s", sub_len, iter, name);
+			ft_snprintf(path, PATH_MAX, "%.*s/%s", sub_len, iter, name);
 			if (access(path, F_OK) == 0)
 			{
 				return (0);

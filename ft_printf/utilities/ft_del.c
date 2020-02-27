@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_puterr.c                                        :+:    :+:            */
+/*   ft_del.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/11 23:22:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/18 12:04:46 by aholster      ########   odam.nl         */
+/*   Created: 2019/01/24 13:11:45 by aholster       #+#    #+#                */
+/*   Updated: 2019/10/04 18:38:21 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/ft_printf.h"
+#include "./../incl/ft_utilities.h"
 
-#include <stdarg.h>
-
-#include "minishell.h"
-
-void	ft_puterr(const char *const err, ...)
+void	ft_del(void *data, size_t size)
 {
-	va_list	ap;
-
-	va_start(ap, err);
-	ft_vdprintf(2, err, ap);
-	va_end(ap);
+	free(data);
+	data = NULL;
+	size = 0;
 }

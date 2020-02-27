@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_puterr.c                                        :+:    :+:            */
+/*   ft_flag_arg_extract.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/11 23:22:45 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/18 12:04:46 by aholster      ########   odam.nl         */
+/*   Created: 2019/10/03 21:32:51 by aholster       #+#    #+#                */
+/*   Updated: 2020/02/19 10:29:52 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/ft_printf.h"
+#include "./../incl/ft_flag_parser.h"
+#include <limits.h>
 
-#include <stdarg.h>
-
-#include "minishell.h"
-
-void	ft_puterr(const char *const err, ...)
+void	ft_flag_arg_extract(const char *const format,\
+			size_t *const aindex,\
+			t_writer *const clipb)
 {
-	va_list	ap;
+	t_flag *const	flags = clipb->flags;
+	int				num;
 
-	va_start(ap, err);
-	ft_vdprintf(2, err, ap);
-	va_end(ap);
+	(void)format;
+	num = va_arg(clipb->args, int);
+	if (num < 0)
+	{
+		flags->padding = ((-num) & UINT_MAX);
+		ft_turn_on_flag('-', flags);
+	}
+	else
+	{
+		flags->padding = num;
+	}
+	*aindex += 1;
 }
