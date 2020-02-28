@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/27 17:19:44 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/18 12:09:32 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/28 19:07:16 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,22 +77,23 @@ static int	switch_directory(char path[PATH_MAX], t_env *const true_env)
 		ft_puterr("minishell: cd: %s No such file of directory\n", path);
 		return (-1);
 	}
-	ft_bzero(old_path, sizeof(old_path));
-	if (getcwd(old_path, sizeof(old_path)) == NULL)
-	{
-		ft_puterr("minishell: cd: could not retrieve path\n");
-	}
+	if (getcwd(old_path, sizeof(old_path)) != NULL)
+		if (set_env("OLDPWD", old_path, &(true_env->env_list)) == -1)
+		{
+			ft_puterr("minishell: cd: error setting env\n");
+			return (-1);
+		}
 	if (chdir(path) != 0)
 	{
 		ft_puterr("minishell: cd: %s Could not change directory\n", path);
 		return (-1);
 	}
-	if (set_env("OLDPWD", old_path, &(true_env->env_list)) == -1 ||
-		set_env("PWD", path, &(true_env->env_list)) == -1)
-	{
-		ft_puterr("minishell: cd: error setting env\n");
-		return (-1);
-	}
+	if (getcwd(path, PATH_MAX) != NULL)
+		if (set_env("PWD", path, &(true_env->env_list)) == -1)
+		{
+			ft_puterr("minishell: cd: error setting env\n");
+			return (-1);
+		}
 	return (0);
 }
 

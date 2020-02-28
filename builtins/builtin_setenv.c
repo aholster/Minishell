@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/11 23:09:22 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/15 23:44:45 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/28 19:11:24 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int			builtin_setenv(int argc, char **argv, t_env *const true_env)
 
 	if (argc == 1)
 	{
-		ft_puterr("Usage: setenv <key>=<value>\n");
+		ft_puterr("Usage: setenv <key>=<value> ...\n");
 		return (1);
 	}
 	err = 0;

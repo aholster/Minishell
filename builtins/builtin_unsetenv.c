@@ -6,7 +6,7 @@
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/12 02:10:20 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/15 23:43:55 by aholster      ########   odam.nl         */
+/*   Updated: 2020/02/28 19:11:45 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,6 @@
 #include "../env_internals/ft_env.h"
 
 #include "../minishell.h"
-
-static int	is_invalidkey(char *iter)
-{
-	if (!(ft_isdigit(iter[0]) || iter[0] == '='))
-	{
-		while (*iter && is_envkey_char(*iter))
-		{
-			iter++;
-		}
-	}
-	return (*iter != '\0');
-}
 
 static void	search_and_destroy(const char *const key,\
 				t_env *const true_env)
@@ -56,7 +44,7 @@ int			builtin_unsetenv(int argc, char **argv, t_env *const true_env)
 
 	if (argc <= 1)
 	{
-		ft_puterr("minishell: unsetenv: not enough arguments");
+		ft_puterr("Usage: unsetenv <key> ...\n");
 		return (1);
 	}
 	else
@@ -64,12 +52,6 @@ int			builtin_unsetenv(int argc, char **argv, t_env *const true_env)
 		index = 1;
 		while (index < argc)
 		{
-			if (is_invalidkey(argv[index]))
-			{
-				ft_puterr("minishell: unsetenv: badly formatted key %s\n",
-							argv[index]);
-				return (1);
-			}
 			search_and_destroy(argv[index], true_env);
 			index++;
 		}
