@@ -6,7 +6,7 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/10 12:58:25 by aholster       #+#    #+#                 #
-#    Updated: 2020/02/18 10:28:01 by aholster      ########   odam.nl          #
+#    Updated: 2020/02/28 16:15:30 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ make_deps:
 $(NAME): $(OBJ)
 	@$(MAKE) make_deps
 	@$(CC) $(CFLAGS) -o $@ $^ -L ./libft -lft -L ./ft_printf -lftprintf
+	@echo "\033[0;32m$(NAME) compiled\033[0;00m"
 
 %.o: %.c $(HEAD)
 	@$(CC) -c $(CFLAGS) -o $@ $<
@@ -56,11 +57,11 @@ clean: clean_deps
 	@rm -f $(OBJ)
 
 fclean: clean
-	@rm -fv $(NAME)
+	@rm -f $(NAME)
 
 re:
-	$(MAKE) fclean
-	$(MAKE) all
+	@$(MAKE) fclean
+	@$(MAKE) all
 
 norm:
 	@echo "\033[0;33m"
