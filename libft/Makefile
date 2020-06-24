@@ -5,8 +5,8 @@
 #                                                      +:+                     #
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2019/12/10 12:58:25 by aholster       #+#    #+#                 #
-#    Updated: 2019/12/13 06:58:21 by aholster      ########   odam.nl          #
+#    Created: 2019/12/10 12:58:25 by aholster      #+#    #+#                  #
+#    Updated: 2020/06/24 11:00:45 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ BASICOR := memset bzero memcpy memccpy memmove memchr memcmp\
  strstr strnstr strcmp strncmp\
  atoi isalpha isdigit isalnum isascii isprint toupper tolower
 
-CUSOR:= ll_len ull_len del lstaddend itoba iswhitespace isprime power putstrarr\
+CUSOR:= ll_len ull_len del lstaddend itoba iswhitespace isprime power\
+ putstrarr\
  putstrarr_fd strarrdel strarrtolst lsttostrarr lstlen min max constrain\
  segdefault factorial count_if range sqrt absneg swap lsttardest memjoin \
  memdup strarrnew textangle stralloc bitprint putmem putmem_fd\
@@ -49,7 +50,7 @@ $(NAME): $(OBJ)
 	@echo "\033[0;32m$(NAME) compiled\033[0;00m"
 
 %.o: %.c $(HEAD)
-	@$(CC) -c $(CFLAGS) -o $@ $<
+	$(CC) -c $(CFLAGS) -o $@ $<
 
 clean:
 	@rm -f $(OBJ)

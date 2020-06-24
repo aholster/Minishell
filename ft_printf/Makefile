@@ -5,8 +5,8 @@
 #                                                      +:+                     #
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
-#    Created: 2019/02/16 15:46:43 by aholster       #+#    #+#                 #
-#    Updated: 2020/02/27 11:11:13 by aholster      ########   odam.nl          #
+#    Created: 2019/02/16 15:46:43 by aholster      #+#    #+#                  #
+#    Updated: 2020/06/24 10:56:41 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,23 +75,19 @@ assemble: $(OBJ) $(HEAD)
 
 $(NAME): $(OBJ) $(HEAD)
 	@echo "\033[0;33mStarting assembly of $(NAME)…\033[0;00m"
-	@time make assemble -j
+	time make assemble -j
 	@echo "\033[0;32m$(NAME) successfully assembled!\033[0;00m\n"
 
 %.o: %.c
-	@$(GCCC) -o $@ $<
+	$(GCCC) -o $@ $<
 
 clean:
-	@echo "\033[0;33mInitializing Summary Deletions...\033[0;00m"
 	@rm -rf $(OBJ)
 	@find "./" -type f \( -name '*~' -o -name '\#*\#' -o -name '.DS_Store' \)\
 	 -exec rm -rfv {} \;
-	@echo "\033[0;31m	Executed!\033[0;00m\n"
 
 fclean: clean
 	@rm -rf $(NAME)
-	@echo "\033[0;31mObituary of $(NAME): Deceased on $(shell date).\
-	\033[0;00m\n"
 
 re: fclean all
 

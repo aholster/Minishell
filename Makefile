@@ -5,8 +5,8 @@
 #                                                      +:+                     #
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2019/12/10 12:58:25 by aholster       #+#    #+#                 #
-#    Updated: 2020/02/28 16:15:30 by aholster      ########   odam.nl          #
+#    Created: 2019/12/10 12:58:25 by aholster      #+#    #+#                  #
+#    Updated: 2020/06/24 10:54:35 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ $(NAME): $(OBJ)
 	@echo "\033[0;32m$(NAME) compiled\033[0;00m"
 
 %.o: %.c $(HEAD)
-	@$(CC) -c $(CFLAGS) -o $@ $<
+	$(CC) -c $(CFLAGS) -o $@ $<
 
 clean_deps:
 	@for dir in $(DEPS); do \
