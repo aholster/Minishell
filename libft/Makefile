@@ -6,7 +6,7 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/10 12:58:25 by aholster      #+#    #+#                  #
-#    Updated: 2020/06/24 11:00:45 by aholster      ########   odam.nl          #
+#    Updated: 2020/06/24 18:03:26 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ HEAD := libft.h
 
 NAME := libft.a
 
-CFLAGS := -Wall -Werror -Wextra -g
+CFLAGS := -Wall -Werror -Wextra
 
 all: $(NAME)
 

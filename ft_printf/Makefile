@@ -6,7 +6,7 @@
 #    By: jesmith <jesmith@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/02/16 15:46:43 by aholster      #+#    #+#                  #
-#    Updated: 2020/06/24 10:56:41 by aholster      ########   odam.nl          #
+#    Updated: 2020/06/24 18:03:34 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ NAME := libftprintf.a
 NORM = norminette $(FILEC) $(HEAD) | grep -e "Error"  -e "Warning" -B 1
 
 GCCC = ${CC} -c
-CC = gcc -Wall -Werror -Wextra -pedantic -g
+CC = gcc -Wall -Werror -Wextra
 AR = ar rcs
 
 all: $(NAME)

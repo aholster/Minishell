@@ -6,7 +6,7 @@
 #    By: aholster <aholster@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/12/10 12:58:25 by aholster      #+#    #+#                  #
-#    Updated: 2020/06/24 10:54:35 by aholster      ########   odam.nl          #
+#    Updated: 2020/06/24 18:03:47 by aholster      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ HEAD := minishell.h ./env_internals/ft_env.h ./builtins/builtin.h\
 
 NAME := minishell
 
-CFLAGS := -Wall -Werror -Wextra -g
+CFLAGS := -Wall -Werror -Wextra
 
 all: $(NAME)
 
