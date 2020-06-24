@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: aholster <aholster@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/12/10 07:20:13 by aholster       #+#    #+#                */
-/*   Updated: 2020/02/19 09:29:57 by aholster      ########   odam.nl         */
+/*   Created: 2019/12/10 07:20:13 by aholster      #+#    #+#                 */
+/*   Updated: 2020/06/24 10:49:03 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 # include <stddef.h>
 
 # ifndef ARG_MAX
-#  define ARG_MAX (256 * 1024)
+#  define ARG_MAX 262144
 # endif
 
-# define PROMPT "¥注文>"
+# define PROMPT "minishell v1.2>"
 
 typedef struct		s_arg_object{
 	char			arg_buf[ARG_MAX + 1];
