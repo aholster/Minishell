@@ -6,7 +6,7 @@
 /*   By: jesmith <jesmith@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/24 21:38:26 by jesmith       #+#    #+#                 */
-/*   Updated: 2020/02/27 15:06:15 by aholster      ########   odam.nl         */
+/*   Updated: 2020/06/24 12:12:26 by aholster      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			ft_str(va_list args, t_writer *const clipb)
 	}
 	if (flg_verif('.', flags) == 1)
 	{
-		len = ft_strnlen(str, flags->precision);
+		len = ft_printf_strnlen(str, flags->precision);
 	}
 	else
 	{
